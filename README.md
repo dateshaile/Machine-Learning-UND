@@ -1,2 +1,2 @@
 # Machine-Learning-UND
-This repository contains projects about Machine Learning Engineer 
+This repository contains projects about Machine Learning 
