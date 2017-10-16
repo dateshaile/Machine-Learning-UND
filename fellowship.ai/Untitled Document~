@@ -1,0 +1,39 @@
+## Data Cleanin renaming cols
+feature = feature.rename(columns={'iyear' :'year', 'imonth':'month', 'iday': 'day', 'country_txt':'country', 'attacktype1_txt': 'attack', 'targtype1_txt': 'target', 'weaptype1_txt': 'weapon_used', 'nkill': 'kill', 'nwound': 'wound', 'weapdetail':'weapon_details' })
+target = target.rename(columns={'ngname': 'group_name'})
+
+
+
+
+
+
+#rename the col
+features = features.rename(columns={'eventid' :'id', 'iyear':'year', 'imonth':'month', 'iday':'day', 'country_txt':'country', 'region_txt':'region', 'city':'city', 'success': 'terror_success', 'suicide' :'terror_suicide', 'attacktype1_txt': 'attack_type',  'targtype1_txt':'target_type', 'weaptype1_txt': 'weapon_type', 'weapdetail':'weapon_detail', 'nkill', 'nwound'})
+
+
+data = data[['eventid', 'iyear', 'imonth', 'iday', 'country_txt', 'region_txt', 'city', 'success', 'suicide', 'attacktype1_txt',  'targtype1_txt', 'individual', 'claimed', 'weaptype1_txt', 'weapdetail', 'nkill', 'nwound', 'gname']]
+
+features = data[['eventid', 'iyear', 'imonth', 'iday', 'country_txt', 'region_txt', 'city', 'success', 'suicide', 'attacktype1_txt',  'targtype1_txt', 'individual', 'claimed', 'weaptype1_txt', 'weapdetail', 'nkill', 'nwound']]
+target = data[['gname']]
+
+#checking how many null NaN value do we have in each col
+dict({'data.columns': data.isnull().sum()})
+
+
+#rename the col
+features = features.rename(columns={'eventid' :'id', 'iyear':'year', 'imonth':'month', 'iday':'day', 'country_txt':'country', 'region_txt':'region', 'city':'city', 'success': 'terror_success', 'suicide' :'terror_suicide', 'attacktype1_txt': 'attack_type',  'targtype1_txt':'target_type', 'weaptype1_txt': 'weapon_type', 'weapdetail':'weapon_detail', 'nkill' :'killed', 'nwound' :'wounded'})
+
+#filling nan value with O (filling missing data of col killed and wounded with 0)
+features['killed'] = features['killed'].fillna(0).astype(int)
+features['wounded'] = features['wounded'].fillna(0).astype(int)
+
+#imputing the missing value in weapon detail
+features = features.fillna(features['weapon_detail'].value_counts().index[0])
+features.weapon_detail.head()
+
+#Let's look on the data using descriptive statistics
+#statistical summary 
+pd.set_option('precision', 2)
+features.describe()
+
+
